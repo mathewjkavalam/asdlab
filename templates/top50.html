@@ -1,0 +1,13 @@
+<html>
+<title>RMDB|A-Z</title>
+<body>
+	<center>
+		<img src="/static/top50.png"><br><br>
+               <ol>
+		{% for movieIndx,movieName in movies %}
+		<li><a href="\details\{{movieIndx}}">{{ movieName }}</a><br>
+		{% endfor %}
+	       </ol>
+	</center>
+</body>
+</html>

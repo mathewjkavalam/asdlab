@@ -13,12 +13,16 @@ def listAll_page():
     #query db get all rows of slno,movie names
     conn = sqlite3.connect("DB.sqllite3")
     conn.row_factory = sqlite3.Row
-    cur = conn.execute('select slno,title from IMDB order by slno')
+    cur = conn.execute('select slno,title from IMDB order by title')
     allmovies = cur.fetchall()
     return render_template('listAll.html',movies=allmovies)
 @app.route('/top50.html')
 def top50_page():
-    return render_template('top50.html')
+    conn = sqlite3.connect("DB.sqllite3")
+    conn.row_factory = sqlite3.Row
+    cur = conn.execute('select slno,title from IMDB order by slno')
+    allmovies = cur.fetchall()
+    return render_template('top50.html',movies=allmovies)
 @app.route('/details/<int(min=1,max=100):sl>')
 def show_details_page(sl):
     #quer all details
