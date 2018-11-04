@@ -37,21 +37,19 @@ def show_details_page(sl):
 
 @app.route('/search',methods = ['POST'])
 def search():
-    global found
-    global keywordFlask
     keywordFlask = request.form['keyword']
     print("keyword:",keywordFlask)
-    ##searching
-    main()
-    if found == 1:
-      redirect("/page1")
-    if found == 2:
-      redirect("/page2")
-    redirect("/")
-    return " "
-
-def search_button():
-    return 'search'
+    found = -1
+    conn = sqlite3.connect("DB.sqllite3")
+    conn.row_factory = sqlite3.Row
+    cur = conn.execute('select slno from IMDB where Title like ?', ['%' + keywordFlask + '%'])
+    allmovies = cur.fetchall()
+    print allmovies[0]
+    found, = allmovies[0]
+    if found>=1 and found <=100:
+      return redirect("/details/"+str(found))
+    else:
+      return redirect('/')
 
 if __name__ == '__main__':
     app.run()
