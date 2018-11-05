@@ -1,11 +1,32 @@
 <html>
 <title>RMDB|{{movieName}}</title>
 <body>
+	{% block login %}
+        {%if notlogged %}
+	{{notlogged}}
+        <a href="/login"><img src ="/static/login.jpg" height=60px align="right"><a>
+        {% endif %}     
+	{% endblock login %}		
+        
+        	<right>user rated:</right>{{ urating }}
 	<center>
 		<h1>{{ movieName }}</h1><br>
 		<h2>{{ director }}</h2><br>
 		<h3>{{ rating }}</h3><br>
 		<h4>{{ genre }}</h4><br>
 	</center>
+        {% block notlogin %}
+        {%if notlogged == False %}
+        
+	<p align="top">currently logged-in</p>
+        <a href=/logout><p align="top">logout</p></a>
+        <a href="/rated/{{slno}}"><img src ="/static/rating.jpg" height=20px align="top"><a>
+        <form action="/submitcomment/{{slno}}" method="post">
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<center>comment:<input type="text" name="comment" align = "bottom"></input></center><br>
+    			<center><input type="submit" value="post"/></center>
+	</form>
+	{% endif %}
+	{% endblock notlogin %}
 </body>
 </html>
